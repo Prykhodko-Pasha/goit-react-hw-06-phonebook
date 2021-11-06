@@ -1,14 +1,17 @@
-export const addContact = value => ({
-  type: 'ADD_CONTACT',
-  payload: value,
+import * as types from './types';
+import { v4 as uuidv4 } from 'uuid';
+
+export const addContact = (name, number) => ({
+  type: types.ADD,
+  payload: { name, number, id: uuidv4() },
 });
 
-export const delContact = value => ({
-  type: 'DEL_CONTACT',
-  payload: value,
+export const delContact = contactId => ({
+  type: types.DEL,
+  payload: contactId,
 });
 
 export const searchContact = value => ({
-  type: 'SEARCH_CONTACT',
+  type: types.SEARCH,
   payload: value,
 });

@@ -1,7 +1,9 @@
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from '../Contacts/Contacts.module.css';
+import { searchContact } from '../../redux/actions';
 
-export default function ContactsSearch({ value, onChange }) {
+function ContactsSearch({ value, onChange }) {
   return (
     <label className={s.wrapper}>
       <input
@@ -18,3 +20,12 @@ ContactsSearch.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  value: state.filter,
+});
+const mapDispatchToProps = dispatch => ({
+  onChange: event => dispatch(searchContact(event.target.value.toLowerCase())),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsSearch);

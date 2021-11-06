@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { v4 as uuidv4 } from 'uuid';
 import s from './Form.module.css';
+import * as actions from '../../redux/actions';
 
-export default function Form({ onAddContact }) {
+function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -23,8 +25,9 @@ export default function Form({ onAddContact }) {
 
   const onSubmit = e => {
     e.preventDefault();
-    const newId = uuidv4();
-    onAddContact({ name, number, id: newId });
+    // const newId = uuidv4();
+    // onAddContact({ name, number, id: newId });
+    console.log(name, number);
     reset();
   };
 
@@ -68,6 +71,12 @@ export default function Form({ onAddContact }) {
   );
 }
 
-Form.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//   addContact: PropTypes.func.isRequired,
+// };
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (name, number) => dispatch(actions.addContact(name, number)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);

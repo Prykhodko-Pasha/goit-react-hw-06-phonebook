@@ -1,7 +1,9 @@
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from '../Contacts/Contacts.module.css';
+import { delContact } from '../../redux/actions';
 
-export default function ContactsItem({ id, name, number, onDeleteContact }) {
+function ContactsItem({ id, name, number, onDelContact }) {
   return (
     <>
       <p>
@@ -10,7 +12,7 @@ export default function ContactsItem({ id, name, number, onDeleteContact }) {
       <button
         className={s.del__btn}
         type="button"
-        onClick={() => onDeleteContact(id)}
+        onClick={() => onDelContact(id)}
       >
         Delete
       </button>
@@ -24,3 +26,12 @@ ContactsItem.propTypes = {
   number: PropTypes.string.isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+  contacts: state.contacts,
+});
+const mapDispatchToProps = dispatch => ({
+  onDelContact: id => dispatch(delContact(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsItem);

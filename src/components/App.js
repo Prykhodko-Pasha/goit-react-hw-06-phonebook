@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Section from './Section/Section';
 import Form from './Form/Form';
@@ -11,16 +11,16 @@ function Phonebook({ contacts, filter, onAddContact, onDelContact }) {
   // const [contacts, setContacts] = useState([]);
   // const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+  //   if (parsedContacts) {
+  //     setContacts(parsedContacts);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
   // const onAddContact = contact => {
   //   const isContactExist = contacts.filter(
@@ -33,15 +33,15 @@ function Phonebook({ contacts, filter, onAddContact, onDelContact }) {
   //   }
   // };
 
-  const filteredContactsArr = () => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter),
-    );
-  };
+  // const filteredContactsArr = () => {
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(filter),
+  //   );
+  // };
 
-  const onSearch = e => {
-    setFilter(e.currentTarget.value.toLowerCase());
-  };
+  // const onSearch = e => {
+  //   setFilter(e.currentTarget.value.toLowerCase());
+  // };
 
   // const onDeleteContact = contactId => {
   //   setContacts(contacts.filter(contact => contact.id !== contactId));
@@ -50,16 +50,13 @@ function Phonebook({ contacts, filter, onAddContact, onDelContact }) {
   return (
     <>
       <Section title="Phonebook">
-        <Form onAddContact={onAddContact} />
+        <Form />
       </Section>
       <Section title="Contacts">
         {contacts.length > 0 ? (
           <>
-            <ContactsSearch value={filter} onChange={onSearch} />
-            <Contacts
-              contactsArr={filteredContactsArr()}
-              onDelContact={onDelContact}
-            />
+            <ContactsSearch />
+            <Contacts />
           </>
         ) : (
           <div className={s.wrapper}>
@@ -80,7 +77,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddContact: () => dispatch(actions.addContact()),
+    onAddContact: contact => dispatch(actions.addContact(contact)),
     onDelContact: () => dispatch(actions.delContact()),
   };
 };
