@@ -1,36 +1,31 @@
-import { combineReducers } from 'redux';
 import * as types from './types';
 
-const items = (state = [], { type, payload }) => {
+const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+
+const initialState = {
+  items: parsedContacts || [],
+  filter: '',
+};
+
+const reducers = (state = initialState, { type, payload }) => {
+  const { items } = state;
+
   switch (type) {
     case types.ADD:
-      return [...state, payload];
+      localStorage.setItem('contacts', JSON.stringify([...items, payload]));
+      return { ...state, items: [...items, payload] };
 
     case types.DEL:
-      return state.filter(contact => contact.id !== payload);
+      const newContactsArr = items.filter(item => item.id !== payload);
+      localStorage.setItem('contacts', JSON.stringify(newContactsArr));
+      return { ...state, items: newContactsArr };
 
-    default:
-      return state;
-  }
-};
-
-const filter = (state = '', { type, payload }) => {
-  switch (type) {
     case types.SEARCH:
-      return payload;
+      return { ...state, filter: payload };
 
     default:
       return state;
   }
 };
-// const search = (state = '', { type, payload }) => {
-//   switch (type) {
-//     case types.SEARCH:
-//       return payload;
 
-//     default:
-//       return state;
-//   }
-// };
-
-export default combineReducers({ items, filter });
+export default reducers;

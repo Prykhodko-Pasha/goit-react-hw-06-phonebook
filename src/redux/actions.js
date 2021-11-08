@@ -2,7 +2,6 @@ import * as types from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 export const addContact = (name, number) => {
-  //   console.log(number, name);
   return {
     type: types.ADD,
     payload: { name: name, number: number, id: uuidv4() },
