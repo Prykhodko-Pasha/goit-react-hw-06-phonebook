@@ -30,7 +30,7 @@ function Phonebook({ items }) {
 
 const mapStateToProps = state => {
   return {
-    items: state.items,
+    items: state.contacts.items,
   };
 };
 

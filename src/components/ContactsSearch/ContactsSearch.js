@@ -22,7 +22,7 @@ ContactsSearch.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  value: state.filter,
+  value: state.contacts.filter,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -77,7 +77,7 @@ function Form({ items, onAddContact }) {
 
 const mapStateToProps = state => {
   return {
-    items: state.items,
+    items: state.contacts.items,
   };
 };
 

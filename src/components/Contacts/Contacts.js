@@ -30,7 +30,7 @@ const getVisibleContacts = (items, filter) => {
 };
 
 const mapStateToProps = state => {
-  const { items, filter } = state;
+  const { items, filter } = state.contacts;
   const visibleContacts = getVisibleContacts(items, filter);
   return {
     contacts: visibleContacts,
