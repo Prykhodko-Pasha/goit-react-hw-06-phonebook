@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { v4 as uuidv4 } from 'uuid';
 import s from './Form.module.css';
 import * as actions from '../../redux/actions';
 
-function Form() {
+function Form({ items, onAddContact }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -25,9 +23,15 @@ function Form() {
 
   const onSubmit = e => {
     e.preventDefault();
-    // const newId = uuidv4();
-    // onAddContact({ name, number, id: newId });
-    console.log(name, number);
+    const isContactExist = items.filter(
+      item => item.name.toLowerCase() === name.toLowerCase(),
+    );
+    if (isContactExist.length === 0) {
+      onAddContact(name, number);
+    } else {
+      alert(`${name} is already in contacts.`);
+    }
+
     reset();
   };
 
@@ -71,12 +75,14 @@ function Form() {
   );
 }
 
-// Form.propTypes = {
-//   addContact: PropTypes.func.isRequired,
-// };
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (name, number) => dispatch(actions.addContact(name, number)),
+  onAddContact: (name, number) => dispatch(actions.addContact(name, number)),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from '../Contacts/Contacts.module.css';
-import { searchContact } from '../../redux/actions';
+import * as actions from '../../redux/actions';
 
 function ContactsSearch({ value, onChange }) {
   return (
@@ -24,8 +24,10 @@ ContactsSearch.propTypes = {
 const mapStateToProps = state => ({
   value: state.filter,
 });
+
 const mapDispatchToProps = dispatch => ({
-  onChange: event => dispatch(searchContact(event.target.value.toLowerCase())),
+  onChange: event =>
+    dispatch(actions.searchContact(event.target.value.toLowerCase())),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsSearch);

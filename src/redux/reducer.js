@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import * as types from './types';
 
-const contacts = (state = [], { type, payload }) => {
+const items = (state = [], { type, payload }) => {
   switch (type) {
     case types.ADD:
       return [...state, payload];
@@ -13,6 +13,7 @@ const contacts = (state = [], { type, payload }) => {
       return state;
   }
 };
+
 const filter = (state = '', { type, payload }) => {
   switch (type) {
     case types.SEARCH:
@@ -22,5 +23,14 @@ const filter = (state = '', { type, payload }) => {
       return state;
   }
 };
+// const search = (state = '', { type, payload }) => {
+//   switch (type) {
+//     case types.SEARCH:
+//       return payload;
 
-export default combineReducers({ contacts, filter });
+//     default:
+//       return state;
+//   }
+// };
+
+export default combineReducers({ items, filter });
