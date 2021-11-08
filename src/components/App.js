@@ -4,11 +4,9 @@ import Form from './Form/Form';
 import Contacts from './Contacts/Contacts';
 import ContactsSearch from './ContactsSearch/ContactsSearch';
 import s from './Contacts/Contacts.module.css';
-// import store from '../redux/store';
 
 function Phonebook({ items }) {
   return (
-    // <Provider store={store.store}>
     <>
       <Section title="Phonebook">
         <Form />
@@ -26,7 +24,6 @@ function Phonebook({ items }) {
         )}
       </Section>
     </>
-    // </Provider>
   );
 }
 
