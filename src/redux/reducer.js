@@ -1,20 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import * as actions from './actions';
-const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
 
 const initialState = {
-  items: parsedContacts || [],
+  items: [],
   filter: '',
 };
 
 const reducers = createReducer(initialState, {
   [actions.addContact]: (state, { payload }) => {
-    localStorage.setItem('contacts', JSON.stringify([...state.items, payload]));
     return { ...state, items: [...state.items, payload] };
   },
   [actions.delContact]: (state, { payload }) => {
     const newContactsArr = state.items.filter(item => item.id !== payload);
-    localStorage.setItem('contacts', JSON.stringify(newContactsArr));
     return { ...state, items: newContactsArr };
   },
   [actions.searchContact]: (state, { payload }) => ({
