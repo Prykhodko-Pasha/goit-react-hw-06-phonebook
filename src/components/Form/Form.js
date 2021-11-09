@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './Form.module.css';
 import * as actions from '../../redux/actions';
+import { getItems } from '../../redux/selectors';
 
 export default function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const items = useSelector(state => state.contacts.items);
+  const items = useSelector(getItems);
   const dispatch = useDispatch();
 
   const onChange = e => {

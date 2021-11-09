@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux';
 import s from './Contacts.module.css';
 import ContactsItem from '../ContactsItem/ContactsItem';
+import { getVisibleContacts } from '../../redux/selectors';
 
 export default function Contacts() {
-  const contacts = useSelector(state => {
-    const { items, filter } = state.contacts;
-    return items.filter(item => item.name.toLowerCase().includes(filter));
-  });
+  const contacts = useSelector(getVisibleContacts);
 
   return (
     <ul className={s.contacts__list}>
