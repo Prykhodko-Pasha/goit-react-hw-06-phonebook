@@ -1,9 +1,13 @@
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import s from './Contacts.module.css';
 import ContactsItem from '../ContactsItem/ContactsItem';
 
-function Contacts({ contacts }) {
+export default function Contacts() {
+  const contacts = useSelector(state => {
+    const { items, filter } = state.contacts;
+    return items.filter(item => item.name.toLowerCase().includes(filter));
+  });
+
   return (
     <ul className={s.contacts__list}>
       {contacts.map(({ id, name, number }) => (
@@ -15,26 +19,17 @@ function Contacts({ contacts }) {
   );
 }
 
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
-};
+//======= vinilla redux =======
+// const getVisibleContacts = (items, filter) => {
+//   return items.filter(item => item.name.toLowerCase().includes(filter));
+// };
 
-const getVisibleContacts = (items, filter) => {
-  return items.filter(item => item.name.toLowerCase().includes(filter));
-};
+// const mapStateToProps = state => {
+//   const { items, filter } = state.contacts;
+//   const visibleContacts = getVisibleContacts(items, filter);
+//   return {
+//     contacts: visibleContacts,
+//   };
+// };
 
-const mapStateToProps = state => {
-  const { items, filter } = state.contacts;
-  const visibleContacts = getVisibleContacts(items, filter);
-  return {
-    contacts: visibleContacts,
-  };
-};
-
-export default connect(mapStateToProps)(Contacts);
+// export default connect(mapStateToProps)(Contacts);

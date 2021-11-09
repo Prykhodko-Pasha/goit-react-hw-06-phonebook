@@ -1,9 +1,11 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from '../Contacts/Contacts.module.css';
 import * as actions from '../../redux/actions';
 
-function ContactsItem({ id, name, number, onDelContact }) {
+export default function ContactsItem({ id, name, number }) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <p>
@@ -12,7 +14,7 @@ function ContactsItem({ id, name, number, onDelContact }) {
       <button
         className={s.del__btn}
         type="button"
-        onClick={() => onDelContact(id)}
+        onClick={() => dispatch(actions.delContact(id))}
       >
         Delete
       </button>
@@ -24,11 +26,12 @@ ContactsItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  onDelContact: PropTypes.func.isRequired,
+  // onDelContact: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  onDelContact: id => dispatch(actions.delContact(id)),
-});
+//======= vinilla redux =======
+// const mapDispatchToProps = dispatch => ({
+//   onDelContact: id => dispatch(actions.delContact(id)),
+// });
 
-export default connect(null, mapDispatchToProps)(ContactsItem);
+// export default connect(null, mapDispatchToProps)(ContactsItem);

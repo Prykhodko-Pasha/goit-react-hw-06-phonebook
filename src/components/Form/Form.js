@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './Form.module.css';
 import * as actions from '../../redux/actions';
 
-function Form({ items, onAddContact }) {
+export default function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const items = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
 
   const onChange = e => {
     const { name, value } = e.currentTarget;
@@ -27,7 +29,7 @@ function Form({ items, onAddContact }) {
       item => item.name.toLowerCase() === name.toLowerCase(),
     );
     if (isContactExist.length === 0) {
-      onAddContact(name, number);
+      dispatch(actions.addContact(name, number));
     } else {
       alert(`${name} is already in contacts.`);
     }
@@ -75,14 +77,15 @@ function Form({ items, onAddContact }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    items: state.contacts.items,
-  };
-};
+//======= vinilla redux =======
+// const mapStateToProps = state => {
+//   return {
+//     items: state.contacts.items,
+//   };
+// };
 
-const mapDispatchToProps = dispatch => ({
-  onAddContact: (name, number) => dispatch(actions.addContact(name, number)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   onAddContact: (name, number) => dispatch(actions.addContact(name, number)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+// export default connect(mapStateToProps, mapDispatchToProps)(Form);

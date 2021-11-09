@@ -1,33 +1,33 @@
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import s from '../Contacts/Contacts.module.css';
 import * as actions from '../../redux/actions';
 
-function ContactsSearch({ value, onChange }) {
+export default function ContactsSearch() {
+  const value = useSelector(state => state.contacts.filter);
+  const dispatch = useDispatch();
+
   return (
     <label className={s.wrapper}>
       <input
         placeholder="Find contacts by name"
         type="text"
         value={value}
-        onChange={onChange}
+        onChange={event =>
+          dispatch(actions.searchContact(event.target.value.toLowerCase()))
+        }
       />
     </label>
   );
 }
 
-ContactsSearch.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+//======= vinilla redux =======
+// const mapStateToProps = state => ({
+//   value: state.contacts.filter,
+// });
 
-const mapStateToProps = state => ({
-  value: state.contacts.filter,
-});
+// const mapDispatchToProps = dispatch => ({
+//   onChange: event =>
+//     dispatch(actions.searchContact(event.target.value.toLowerCase())),
+// });
 
-const mapDispatchToProps = dispatch => ({
-  onChange: event =>
-    dispatch(actions.searchContact(event.target.value.toLowerCase())),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsSearch);
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactsSearch);
